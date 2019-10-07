@@ -13,8 +13,12 @@ req() {
 }
 
 installNewRelic() {
-#  https://github.com/In-Touch/laravel-newrelic#laravel-4x-support
+  #  https://github.com/In-Touch/laravel-newrelic#laravel-4x-support
   composer require intouch/laravel-newrelic
+}
+
+publish() {
+  php artisan vendor:publish --provider="Intouch\LaravelNewrelic\NewrelicServiceProvider"
 }
 
 "$@"
