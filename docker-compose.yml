@@ -4,5 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        - NEWRELIC_LICENSE_KEY=${NEWRELIC_LICENSE_KEY}
     ports:
       - 8011:8000/tcp

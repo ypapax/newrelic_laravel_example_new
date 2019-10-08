@@ -24,10 +24,22 @@ RUN which composer
 RUN apt-get install php-mbstring -y
 RUN apt-get install php-xml -y
 RUN apt-get install sudo -y
+RUN apt-get install wget -y
 RUN adduser --disabled-password --gecos '' newuser
+RUN echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | sudo tee /etc/apt/sources.list.d/newrelic.list
+RUN wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
+RUN sudo apt-get update
+RUN echo newrelic-php5 newrelic-php5/application-name string "$PROJ" | debconf-set-selections
+ARG NEWRELIC_LICENSE_KEY
+RUN ls -lah && echo NEWRELIC_LICENSE_KEY $NEWRELIC_LICENSE_KEY
+RUN echo newrelic-php5 newrelic-php5/license-key string "$NEWRELIC_LICENSE_KEY" | debconf-set-selections
+
+RUN sudo apt-get install newrelic-php5 -y
+ENV PROJ=lara
+
+
 #COPY php.ini /etc/php/7.3/cli/php.ini
 EXPOSE 8000
-ENV PROJ=lara
 COPY . $PROJ
 WORKDIR $PROJ
 CMD php artisan serve --host 0.0.0.0 --port 8000

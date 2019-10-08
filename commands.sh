@@ -22,8 +22,8 @@ publish() {
 }
 
 rund() {
-  docker-compose build
-  docker-compose up
+  NEWRELIC_LICENSE_KEY=$NEWRELIC_LICENSE_KEY docker-compose build
+  NEWRELIC_LICENSE_KEY=$NEWRELIC_LICENSE_KEY docker-compose up
 }
 
 "$@"
