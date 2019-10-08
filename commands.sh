@@ -26,4 +26,10 @@ rund() {
   NEWRELIC_LICENSE_KEY=$NEWRELIC_LICENSE_KEY docker-compose up
 }
 
+reqs(){
+  while True; do
+    curl http://localhost:8011
+  done
+}
+
 "$@"

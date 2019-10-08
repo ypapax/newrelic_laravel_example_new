@@ -16,7 +16,6 @@ RUN apt-get install -y curl
 RUN apt-get install php7.3 -y
 RUN php -v
 
-#RUN curl --silent --show-error https://getcomposer.org/installer | php
 WORKDIR /root
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
@@ -29,16 +28,13 @@ RUN adduser --disabled-password --gecos '' newuser
 RUN echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | sudo tee /etc/apt/sources.list.d/newrelic.list
 RUN wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
 RUN sudo apt-get update
-RUN echo newrelic-php5 newrelic-php5/application-name string "$PROJ" | debconf-set-selections
+ARG PROJ
 ARG NEWRELIC_LICENSE_KEY
+RUN echo newrelic-php5 newrelic-php5/application-name string "$PROJ" | debconf-set-selections
+
 RUN ls -lah && echo NEWRELIC_LICENSE_KEY $NEWRELIC_LICENSE_KEY
 RUN echo newrelic-php5 newrelic-php5/license-key string "$NEWRELIC_LICENSE_KEY" | debconf-set-selections
-
 RUN sudo apt-get install newrelic-php5 -y
-ENV PROJ=lara
-
-
-#COPY php.ini /etc/php/7.3/cli/php.ini
 EXPOSE 8000
 COPY . $PROJ
 WORKDIR $PROJ
