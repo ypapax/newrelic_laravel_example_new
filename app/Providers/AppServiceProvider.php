@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Intouch\Newrelic\Newrelic;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $nr = new Newrelic();
+        $nr->setAppName('MyApp');
     }
 
     /**
