@@ -21,4 +21,9 @@ publish() {
   php artisan vendor:publish --provider="Intouch\LaravelNewrelic\NewrelicServiceProvider"
 }
 
+rund() {
+  docker-compose build
+  docker-compose up
+}
+
 "$@"
